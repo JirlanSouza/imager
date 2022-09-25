@@ -51,8 +51,8 @@ export function AspectrationButtonsBox({ aspectRatioCode, setAspectRatioCode }: 
       />
       <AspectRatioButton
         selected={aspectRatioCode === 6}
-        ratioX={19}
-        ratioY={10}
+        ratioX={21}
+        ratioY={9}
         onClick={() => handleSelectAspectRatio(6)}
       />
     </div>
