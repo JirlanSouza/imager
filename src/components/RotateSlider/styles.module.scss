@@ -7,15 +7,15 @@
 
   div {
     &::-webkit-scrollbar {
-      display: none;
+      background: none;
     }
 
     &::-webkit-scrollbar-track {
-      display: none;
+      background: none;
     }
 
     &::-webkit-scrollbar-thumb {
-      display: none;
+      background: none;
     }
   }
 }
