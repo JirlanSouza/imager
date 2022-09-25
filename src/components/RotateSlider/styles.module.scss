@@ -1,0 +1,40 @@
+@import "/src/styles/theme.scss";
+
+.app_rotate_slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  div {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      display: none;
+    }
+  }
+}
+
+.app_rotate_slider_label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $accent-color;
+}
+
+.app_rotate_slider_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  transform: rotate(90deg);
+  scroll-snap-type: x mandatory;
+}
+
+.app_rotate_slider_item_selected {
+  color: $accent-color;
+}
