@@ -1,35 +1,38 @@
 import { useState } from "react";
 
+import { useEditImageStore } from "../../contexts/imageContext";
+import { editImageActions } from "../../actions/EditImage";
 import { AspectrationButtonsBox } from "../AspectRatioButtonsBox";
 import { PrimaryButton } from "../PrimaryButton";
 import { RotateSlider } from "../RotateSlider";
 import styles from "./styles.module.scss";
 
-interface EditingComandsProps {
-  rotateValue: number;
-  aspectRatioCode: number;
-  setRotateValue: (value: number) => void;
-  setAspectRatioCode: (code: number) => void;
-}
-
-export function EditingComands({
-  rotateValue,
-  aspectRatioCode,
-  setRotateValue,
-  setAspectRatioCode,
-}: EditingComandsProps) {
-  const [lastStartVisible, setLastStartVisible] = useState(174);
+export function EditingComands() {
+  const [lastStartVisible, setLastStartVisible] = useState(173);
+  const { state, dispatch } = useEditImageStore();
 
   function handleSliderWeel(value: number) {
-    setRotateValue(rotateValue + (value - lastStartVisible));
+    dispatch(editImageActions.setRotate(state.rotate + (value - lastStartVisible)));
     setLastStartVisible(value);
+  }
+
+  function handleSelectAspect(aspectKey: string) {
+    dispatch(editImageActions.setAspect(aspectKey));
+  }
+
+  function handleApply() {
+    dispatch(editImageActions.setStep("download"));
   }
 
   return (
     <div className={styles.comands_container}>
-      <RotateSlider rotateValue={rotateValue} onRendered={handleSliderWeel} />
-      <AspectrationButtonsBox aspectRatioCode={aspectRatioCode} setAspectRatioCode={setAspectRatioCode} />
-      <PrimaryButton>Apply</PrimaryButton>
+      <RotateSlider rotateValue={state.rotate} onRendered={handleSliderWeel} />
+      <AspectrationButtonsBox
+        aspects={state.aspects}
+        selectedAspect={state.selectedAspect}
+        selectAspect={handleSelectAspect}
+      />
+      <PrimaryButton onClick={handleApply}>Apply</PrimaryButton>
     </div>
   );
 }

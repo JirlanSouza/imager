@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from "react-image-crop";
 
 import "react-image-crop/dist/ReactCrop.css";
+import { editImageActions } from "../../actions/EditImage";
 
-import defaultImage from "../../assets/images/default.jpg";
+import { useEditImageStore } from "../../contexts/imageContext";
+import { canvasPreview } from "./canvasPreview";
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
@@ -21,18 +23,14 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
   );
 }
 
-interface ImageCropProps {
-  rotate: number;
-  scale: number;
-  aspect?: number;
-}
-
-export function ImageCrop({ rotate, scale, aspect }: ImageCropProps) {
-  const [imgSrc, setImgSrc] = useState(defaultImage);
+export function ImageCrop() {
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
+
+  const { state, dispatch } = useEditImageStore();
+  const aspect = state.aspects[state.selectedAspect];
 
   useEffect(() => {
     if (!imgRef.current) return;
@@ -44,7 +42,21 @@ export function ImageCrop({ rotate, scale, aspect }: ImageCropProps) {
     }
 
     updateCrop(width, height);
-  }, [aspect]);
+    setTimeout(updateImageOut, 200);
+  }, [aspect, state.rotate, state.scale, completedCrop]);
+
+  function updateImageOut() {
+    console.log(completedCrop);
+    if (!completedCrop || !imgRef.current) return;
+
+    const canvas = document.createElement("canvas");
+
+    canvasPreview(imgRef.current, canvas, completedCrop, state.scale, state.rotate);
+
+    const imageOut = canvas.toDataURL();
+
+    dispatch(editImageActions.setImageOut(imageOut));
+  }
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     const { width, height } = e.currentTarget;
@@ -65,13 +77,13 @@ export function ImageCrop({ rotate, scale, aspect }: ImageCropProps) {
       crop={crop}
       onChange={(_, percentCrop) => setCrop(percentCrop)}
       onComplete={(c) => setCompletedCrop(c)}
-      aspect={aspect}
+      aspect={state.aspects[state.selectedAspect]}
     >
       <img
         ref={imgRef}
         alt="Crop me"
-        src={imgSrc}
-        style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+        src={state.imageSrc}
+        style={{ transform: `scale(${state.scale}) rotate(${state.rotate}deg)` }}
         onLoad={onImageLoad}
       />
     </ReactCrop>
