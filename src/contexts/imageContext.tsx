@@ -2,15 +2,13 @@ import React, { createContext, useContext, useReducer } from "react";
 import { EditImageAction } from "../actions/EditImage";
 import { editImageReducer, EditImageState } from "../reducers/EditImage";
 
-import defaultImage from "../assets/images/default.jpg";
-
 interface EditImageStore {
   state: EditImageState;
   dispatch: React.Dispatch<EditImageAction>;
 }
 const initialState: EditImageState = {
   step: "selectImage",
-  imageSrc: defaultImage,
+  imageSrc: "",
   rotate: 0,
   scale: 1,
   selectedAspect: "16 x 9",
