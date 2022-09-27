@@ -1,0 +1,30 @@
+@import "../../styles/theme.scss";
+
+.app_image_input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+
+  height: 8rem;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+
+  span {
+    display: flex;
+
+    width: 6rem;
+    height: 6rem;
+
+    border: 2px dashed $border-color;
+    border-radius: 0.5rem;
+
+    cursor: pointer;
+
+    input {
+      display: none;
+    }
+  }
+}
