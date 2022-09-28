@@ -17,4 +17,10 @@
   text-decoration: none;
 
   background: $accent-color;
+
+  &:disabled {
+    opacity: 0.5;
+    color: rgba($text-color, 0.5);
+    cursor: not-allowed;
+  }
 }
