@@ -4,6 +4,7 @@ type EditingImageStep = "selectImage" | "edit" | "download";
 
 export interface EditImageState {
   step: EditingImageStep;
+  imageName: string;
   imageSrc: string;
   rotate: number;
   scale: number;
@@ -35,6 +36,12 @@ const actionsExecutors: Record<EditImageActionsType, (state: EditImageState, pay
     return {
       ...state,
       rotate: payload,
+    };
+  },
+  setImageName: (state: EditImageState, payload: string) => {
+    return {
+      ...state,
+      imageName: payload,
     };
   },
   setImageSrc: (state: EditImageState, payload: string) => {
