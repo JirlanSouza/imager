@@ -4,14 +4,15 @@ import { useEditImageStore } from "../../contexts/imageContext";
 import styles from "./styles.module.scss";
 
 export function ImageInput() {
-  const [imageName, setImagename] = useState("Selecione uma imagem");
+  const [imageName, setImageName] = useState("Selecione uma imagem");
   const { state, dispatch } = useEditImageStore();
 
   function handleSelectImage(event: React.ChangeEvent<HTMLInputElement>) {
     if (!event.target.files) return;
     const imageFile = event.target.files[0];
-    setImagename(imageFile.name);
+    setImageName(imageFile.name);
     const imageUrl = URL.createObjectURL(imageFile);
+    dispatch(editImageActions.setImageName(imageFile.name));
     dispatch(editImageActions.setImageSrc(imageUrl));
   }
 
