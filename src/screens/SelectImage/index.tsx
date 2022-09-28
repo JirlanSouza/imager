@@ -16,6 +16,7 @@ export function SelectImage() {
 
       <div className={styles.app_buttons_box}>
         <PrimaryButton
+          disabled={!state.imageName}
           onClick={() => {
             dispatch(editImageActions.setStep("edit"));
           }}
