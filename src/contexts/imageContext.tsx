@@ -8,6 +8,7 @@ interface EditImageStore {
 }
 const initialState: EditImageState = {
   step: "selectImage",
+  imageName: "",
   imageSrc: "",
   rotate: 0,
   scale: 1,
