@@ -83,7 +83,7 @@ export function ImageCrop() {
         ref={imgRef}
         alt="Crop me"
         src={state.imageSrc}
-        style={{ transform: `scale(${state.scale}) rotate(${state.rotate}deg)` }}
+        style={{ transform: `scale(${state.scale}) rotate(${state.rotate}deg)`, borderRadius: "0.5rem" }}
         onLoad={onImageLoad}
       />
     </ReactCrop>
