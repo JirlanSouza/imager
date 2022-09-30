@@ -21,7 +21,7 @@ export function AspectrationButtonsBox({ aspects, selectedAspect, selectAspect }
           key={aspectKey}
           selected={selectedAspect === aspectKey}
           label={aspectKey}
-          aspect={aspects[aspectKey]}
+          aspect={aspects[aspectKey] || 1}
           onClick={() => handleSelectAspectRatio(aspectKey)}
         />
       ))}
