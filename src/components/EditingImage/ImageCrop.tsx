@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from "react-image-crop";
+import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop, PercentCrop } from "react-image-crop";
 
 import "react-image-crop/dist/ReactCrop.css";
 import { editImageActions } from "../../actions/EditImage";
@@ -12,7 +12,7 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
     makeAspectCrop(
       {
         unit: "%",
-        width: 90,
+        width: 60,
       },
       aspect,
       mediaWidth,
@@ -24,7 +24,6 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 }
 
 export function ImageCrop() {
-  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
@@ -33,28 +32,21 @@ export function ImageCrop() {
   const aspect = state.aspects[state.selectedAspect];
 
   useEffect(() => {
-    if (!imgRef.current) return;
+    if (!imgRef.current || !aspect) return;
     const { width, height } = imgRef.current;
+    setCrop(centerAspectCrop(width, height, aspect));
+  }, [state.imageSrc, state.rotate, state.scale, aspect]);
 
-    if (aspect === 0) {
-      setFreeAspect(width, height);
-      return;
-    }
-
-    updateCrop(width, height);
+  useEffect(() => {
     setTimeout(updateImageOut, 200);
-  }, [aspect, state.rotate, state.scale, completedCrop]);
+  }, [completedCrop]);
 
   function updateImageOut() {
-    console.log(completedCrop);
     if (!completedCrop || !imgRef.current) return;
 
     const canvas = document.createElement("canvas");
-
     canvasPreview(imgRef.current, canvas, completedCrop, state.scale, state.rotate);
-
     const imageOut = canvas.toDataURL();
-
     dispatch(editImageActions.setImageOut(imageOut));
   }
 
@@ -68,16 +60,12 @@ export function ImageCrop() {
     setCrop(centerAspectCrop(width, height, aspect));
   }
 
-  function setFreeAspect(width: number, height: number) {
-    setCrop(undefined);
-  }
-
   return (
     <ReactCrop
       crop={crop}
       onChange={(_, percentCrop) => setCrop(percentCrop)}
       onComplete={(c) => setCompletedCrop(c)}
-      aspect={state.aspects[state.selectedAspect]}
+      aspect={state.aspects[state.selectedAspect] || undefined}
     >
       <img
         ref={imgRef}
