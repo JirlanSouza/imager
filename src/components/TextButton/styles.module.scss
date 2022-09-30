@@ -10,4 +10,10 @@
   border: none;
 
   background: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
