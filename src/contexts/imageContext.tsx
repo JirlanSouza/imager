@@ -14,6 +14,7 @@ const initialState: EditImageState = {
   scale: 1,
   selectedAspect: "16 x 9",
   aspects: {
+    Free: 0,
     "1 x 1": 1 / 1,
     "2 x 3": 2 / 3,
     "3 x 2": 3 / 2,
