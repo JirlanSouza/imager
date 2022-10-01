@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  row-gap: 0.3rem;
 
   div {
     &::-webkit-scrollbar {
@@ -23,7 +24,18 @@
 .app_rotate_slider_label {
   font-size: 1rem;
   font-weight: 700;
+  line-height: 1.1rem;
   color: $accent-color;
+}
+
+.app_rotate_slider_pipes {
+  display: flex;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.app_rotate_slider_moving {
+  cursor: w-resize;
 }
 
 .app_rotate_slider_item {
