@@ -8,12 +8,10 @@ import { RotateSlider } from "../RotateSlider";
 import styles from "./styles.module.scss";
 
 export function EditingComands() {
-  const [lastStartVisible, setLastStartVisible] = useState(173);
   const { state, dispatch } = useEditImageStore();
 
   function handleSliderWeel(value: number) {
-    dispatch(editImageActions.setRotate(state.rotate + (value - lastStartVisible)));
-    setLastStartVisible(value);
+    dispatch(editImageActions.setRotate(value));
   }
 
   function handleSelectAspect(aspectKey: string) {
@@ -26,7 +24,7 @@ export function EditingComands() {
 
   return (
     <div className={styles.comands_container}>
-      <RotateSlider rotateValue={state.rotate} onRendered={handleSliderWeel} />
+      <RotateSlider rotateValue={state.rotate} onChange={handleSliderWeel} />
       <AspectrationButtonsBox
         aspects={state.aspects}
         selectedAspect={state.selectedAspect}
