@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import { editImageActions } from "../../actions/EditImage";
 import { DownloadScreenHeader } from "../../components/DownloadScreenHeader";
-import { PrimaryButton } from "../../components/PrimaryButton";
 import { PrimaryLinkButton } from "../../components/PrimaryButton/PrimaryLinkButton";
 import { useEditImageStore } from "../../contexts/imageContext";
 import styles from "./styles.module.scss";
