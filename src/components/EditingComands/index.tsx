@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { useEditImageStore } from "../../contexts/imageContext";
 import { editImageActions } from "../../actions/EditImage";
 import { AspectrationButtonsBox } from "../AspectRatioButtonsBox";

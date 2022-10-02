@@ -1,4 +1,4 @@
-import { FaArrowLeft, FaTimes } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { editImageActions } from "../../actions/EditImage";
 import { useEditImageStore } from "../../contexts/imageContext";
 
